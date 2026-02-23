@@ -1,0 +1,487 @@
+/* === Card Component === */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    backdrop-filter: blur(12px);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .card {
+        padding: var(--space-4);
+    }
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-glass);
+    opacity: 0.6;
+}
+
+.card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+}
+
+.card-title {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* === Badge Component === */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.badge-buy {
+    background: var(--color-buy-bg);
+    color: var(--color-buy);
+    border: 1px solid rgba(0, 230, 118, 0.2);
+}
+
+.badge-sell {
+    background: var(--color-sell-bg);
+    color: var(--color-sell);
+    border: 1px solid rgba(255, 23, 68, 0.2);
+}
+
+.badge-hold {
+    background: var(--color-hold-bg);
+    color: var(--color-hold);
+    border: 1px solid rgba(255, 171, 0, 0.2);
+}
+
+.badge-neutral {
+    background: rgba(120, 144, 156, 0.1);
+    color: var(--color-neutral);
+    border: 1px solid rgba(120, 144, 156, 0.2);
+}
+
+.badge-live {
+    background: var(--color-buy-bg);
+    color: var(--color-buy);
+    border: 1px solid rgba(0, 230, 118, 0.2);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.badge-live::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-buy);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* === Button Component === */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    transition: all var(--transition-fast);
+    border: 1px solid transparent;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 4px 15px var(--accent-primary-glow);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 6px 25px var(--accent-primary-glow);
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--bg-glass-border);
+    color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+    background: var(--bg-glass);
+    color: var(--text-primary);
+}
+
+.btn-buy {
+    background: var(--gradient-buy);
+    color: var(--bg-primary);
+    font-weight: var(--weight-bold);
+}
+
+.btn-sell {
+    background: var(--gradient-sell);
+    color: white;
+    font-weight: var(--weight-bold);
+}
+
+/* === Stat Box === */
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.stat-label {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: var(--weight-medium);
+}
+
+.stat-value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    color: var(--text-primary);
+}
+
+.stat-change {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+}
+
+.stat-change.positive {
+    color: var(--color-buy);
+}
+
+.stat-change.negative {
+    color: var(--color-sell);
+}
+
+/* === Table Component === */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+}
+
+.data-table th {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--bg-glass-border);
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: var(--space-3) var(--space-4);
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+}
+
+.data-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-primary);
+}
+
+/* === Gauge Component === */
+.gauge {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gauge svg {
+    transform: rotate(-90deg);
+}
+
+.gauge-value {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-lg);
+}
+
+.gauge-label {
+    position: absolute;
+    bottom: 15%;
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* === Signal Indicator === */
+.signal-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-lg);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.signal-strong-buy {
+    background: var(--color-buy-bg);
+    color: var(--color-buy);
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    animation: glowGreen 3s ease-in-out infinite;
+}
+
+.signal-buy {
+    background: var(--color-buy-bg);
+    color: var(--color-buy);
+    border: 1px solid rgba(0, 230, 118, 0.2);
+}
+
+.signal-hold {
+    background: var(--color-hold-bg);
+    color: var(--color-hold);
+    border: 1px solid rgba(255, 171, 0, 0.2);
+}
+
+.signal-sell {
+    background: var(--color-sell-bg);
+    color: var(--color-sell);
+    border: 1px solid rgba(255, 23, 68, 0.2);
+}
+
+.signal-strong-sell {
+    background: var(--color-sell-bg);
+    color: var(--color-sell);
+    border: 1px solid rgba(255, 23, 68, 0.3);
+    animation: glowRed 3s ease-in-out infinite;
+}
+
+/* === Progress Bar === */
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width var(--transition-slow);
+}
+
+/* === Tag / Chip === */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 10px;
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+/* === Tooltip === */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    padding: var(--space-2) var(--space-3);
+    background: var(--bg-secondary);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all var(--transition-fast);
+    z-index: 100;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* === Mini Sparkline Canvas === */
+.sparkline-container {
+    width: 100%;
+    height: 40px;
+}
+
+/* === News Item === */
+.news-item {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--bg-glass-border);
+    background: var(--bg-glass);
+    transition: all var(--transition-base);
+}
+
+.news-item:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.news-sentiment-bar {
+    width: 3px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+}
+
+.news-sentiment-bar.bullish {
+    background: var(--color-buy);
+}
+
+.news-sentiment-bar.bearish {
+    background: var(--color-sell);
+}
+
+.news-sentiment-bar.neutral {
+    background: var(--color-neutral);
+}
+
+/* === Toggle Switch === */
+.toggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+    border: 1px solid var(--bg-glass-border);
+}
+
+.toggle.active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+.toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    transition: transform var(--transition-fast);
+}
+
+.toggle.active::after {
+    transform: translateX(20px);
+}
+
+/* === Slider === */
+.range-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-full);
+    outline: none;
+}
+
+.range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--accent-primary-glow);
+    transition: transform var(--transition-fast);
+}
+
+.range-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* === Connection Status Dot === */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.status-dot.connected {
+    background: var(--color-buy);
+    box-shadow: 0 0 8px var(--color-buy-glow);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.status-dot.disconnected {
+    background: var(--color-sell);
+    box-shadow: 0 0 8px var(--color-sell-glow);
+}
+
+.status-dot.connecting {
+    background: var(--color-hold);
+    animation: pulse 1s ease-in-out infinite;
+}
