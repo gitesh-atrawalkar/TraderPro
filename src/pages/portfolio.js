@@ -6,16 +6,17 @@ import { formatPrice, formatLargeNumber } from '../engine/market.js';
 import { drawEquityCurve } from '../components/charts.js';
 
 export function renderPortfolio(container, appState) {
-    const { portfolio: port } = appState;
-    const metrics = port.getMetrics();
+  const { portfolio: port } = appState;
+  const metrics = port.getMetrics();
 
-    container.innerHTML = `
+  container.innerHTML = `
     <div class="page-enter">
       <!-- Key Metrics -->
       <div class="grid-6" style="margin-bottom:var(--space-5)">
         ${statCard('Equity', '$' + formatLargeNumber(metrics.equity), '--accent-cyan')}
         ${statCard('Total Return', (metrics.totalReturn >= 0 ? '+' : '') + metrics.totalReturn.toFixed(2) + '%', metrics.totalReturn >= 0 ? '--color-buy' : '--color-sell')}
         ${statCard('Win Rate', metrics.winRate.toFixed(1) + '%', '--color-hold')}
+        ${statCard('Target Win Rate', '60.0%', '--accent-primary')}
         ${statCard('Sharpe Ratio', metrics.sharpeRatio.toFixed(2), '--accent-secondary')}
         ${statCard('Max Drawdown', metrics.maxDrawdown.toFixed(2) + '%', '--color-sell')}
         ${statCard('Profit Factor', metrics.profitFactor === Infinity ? '∞' : metrics.profitFactor.toFixed(2), '--accent-primary')}
@@ -53,7 +54,7 @@ export function renderPortfolio(container, appState) {
               <thead><tr><th>Pair</th><th>Type</th><th>Entry</th><th>Current</th><th>P&L</th></tr></thead>
               <tbody>
                 ${port.positions.length === 0 ? '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:var(--space-6)">No open positions</td></tr>' :
-            port.positions.map(p => `
+      port.positions.map(p => `
                     <tr>
                       <td style="color:var(--text-primary);font-weight:600">${p.symbol}</td>
                       <td><span class="badge ${p.type === 'LONG' ? 'badge-buy' : 'badge-sell'}">${p.type}</span></td>
@@ -97,7 +98,7 @@ export function renderPortfolio(container, appState) {
             <thead><tr><th>Time</th><th>Pair</th><th>Type</th><th>Entry</th><th>Exit</th><th>P&L</th><th>%</th></tr></thead>
             <tbody>
               ${port.closedTrades.length === 0 ? '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:var(--space-6)">No trade history yet</td></tr>' :
-            port.closedTrades.slice().reverse().map(t => `
+      port.closedTrades.slice().reverse().map(t => `
                   <tr>
                     <td>${new Date(t.closeTime).toLocaleTimeString()}</td>
                     <td style="color:var(--text-primary);font-weight:600">${t.symbol}</td>
@@ -119,15 +120,15 @@ export function renderPortfolio(container, appState) {
     </div>
   `;
 
-    // Draw equity curve
-    requestAnimationFrame(() => {
-        const canvas = document.getElementById('equity-chart');
-        if (canvas) drawEquityCurve(canvas, port.equityHistory);
-    });
+  // Draw equity curve
+  requestAnimationFrame(() => {
+    const canvas = document.getElementById('equity-chart');
+    if (canvas) drawEquityCurve(canvas, port.equityHistory);
+  });
 }
 
 function statCard(label, value, colorVar) {
-    return `
+  return `
     <div class="card" style="padding:var(--space-4);text-align:center">
       <div class="card-title" style="margin-bottom:var(--space-2)">${label}</div>
       <div class="mono" style="font-size:var(--text-lg);font-weight:var(--weight-bold);color:var(${colorVar})">${value}</div>
@@ -136,7 +137,7 @@ function statCard(label, value, colorVar) {
 }
 
 function perfRow(label, value, colorVar) {
-    return `
+  return `
     <div class="flex justify-between items-center" style="padding:var(--space-2) 0;border-bottom:1px solid var(--bg-glass-border)">
       <span style="color:var(--text-tertiary);font-size:var(--text-sm)">${label}</span>
       <span class="mono" style="font-weight:var(--weight-semibold);font-size:var(--text-sm);${colorVar ? `color:var(${colorVar})` : ''}">${value}</span>

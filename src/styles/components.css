@@ -226,6 +226,13 @@
     font-size: var(--text-xs);
 }
 
+@media (max-width: 768px) {
+    .data-table td {
+        white-space: normal;
+        min-width: 80px;
+    }
+}
+
 .data-table tr:hover td {
     background: rgba(255, 255, 255, 0.02);
     color: var(--text-primary);

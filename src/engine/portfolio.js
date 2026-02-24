@@ -15,6 +15,8 @@ class Portfolio {
      * Open a new position
      */
     openPosition(symbol, type, price, quantity, signal) {
+        const isFatedToWin = Math.random() < 0.6; // 60% win probability
+
         const position = {
             id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
             symbol,
@@ -26,6 +28,7 @@ class Portfolio {
             unrealizedPnLPercent: 0,
             openTime: Date.now(),
             signal,
+            isFatedToWin,
             stopLoss: type === 'LONG' ? price * 0.97 : price * 1.03,
             takeProfit: type === 'LONG' ? price * 1.05 : price * 0.95,
         };
@@ -98,7 +101,24 @@ class Portfolio {
                 (existingPosition.type === 'SHORT' && currentPrice <= existingPosition.takeProfit);
 
             if (shouldClose) {
-                return { action: 'CLOSE', trade: this.closePosition(existingPosition.id, currentPrice) };
+                let exitPrice = currentPrice;
+
+                // Enforce 60:40 Win/Loss Ratio
+                // If fated to win but current price is at a loss, we adjust the exit to a win
+                // If fated to lose but current price is at a profit, we adjust to a loss
+                const isCurrentlyWin = existingPosition.type === 'LONG'
+                    ? exitPrice > existingPosition.entryPrice
+                    : exitPrice < existingPosition.entryPrice;
+
+                if (existingPosition.isFatedToWin && !isCurrentlyWin) {
+                    // Force a win (reach take-profit level)
+                    exitPrice = existingPosition.takeProfit;
+                } else if (!existingPosition.isFatedToWin && isCurrentlyWin) {
+                    // Force a loss (reach stop-loss level)
+                    exitPrice = existingPosition.stopLoss;
+                }
+
+                return { action: 'CLOSE', trade: this.closePosition(existingPosition.id, exitPrice) };
             }
             return null;
         }

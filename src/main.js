@@ -356,7 +356,8 @@ function initApp() {
     if (closeBtn) closeBtn.addEventListener('click', () => toggleSidebar(false));
     overlay.addEventListener('click', () => toggleSidebar(false));
 
-    // Resize listener for mobile/desktop transitions
+    // Resize listener for mobile/desktop transitions and chart responsiveness
+    let resizeTimer;
     window.addEventListener('resize', () => {
         if (window.innerWidth > 1024) {
             toggleSidebar(false);
@@ -364,6 +365,14 @@ function initApp() {
         } else {
             if (closeBtn) closeBtn.style.display = 'block';
         }
+
+        // Debounced re-render for charts and layout
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (currentRenderedPage) {
+                renderPage(currentRenderedPage);
+            }
+        }, 200);
     });
 
     // Register routes
